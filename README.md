@@ -5,4 +5,4 @@ requirement:
 
 STEPS：  
 1. 开发人员拉去代码、修改之后保存。  
-2. 在代码根目录运行```bash /bin/bash start.sh```。
+2. 在代码根目录运行```/bin/bash start.sh```。
