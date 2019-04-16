@@ -11,7 +11,7 @@ spec:
         app: springboot-demo
     spec:
       containers:
-      - image: iexamcert/springboot-demo:<BUILD_TAG>
+      - image: iexamcert/springboot-hello:<BUILD_TAG>
         imagePullPolicy: IfNotPresent
         name: springboot-demo
         env:
@@ -31,7 +31,7 @@ spec:
   type: NodePort
   ports:
   - name: web
-    port: 80
-    targetPort: 80
+    port: 8080
+    targetPort: 8080
     #指定nodePort为方便测试，在各环境中应注释此处nodePort避免端口造成冲突
     nodePort: 30003
