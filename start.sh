@@ -3,7 +3,7 @@ POM_FILE="pom.xml"
 IMAGE_VERSION="V1"
 DOCKER_PORT=""
 
-
+#还原Dockerfile模板
 cp Dockerfile.bak Dockerfile
 #DOCKER_HOST="127.0.0.1"
 ###根据pom文件生成jar包的名称
