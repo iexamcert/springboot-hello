@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    region: 'us-east-2'
+  tasks:
+    - name: Remove Key Pair
+      ec2_key:
+        name: sshkeypair
+        state: absent
+        region: "{{ region  }}"
+    - name: delete private key
+      file:
+        path: ./aws-private.pem
+        state: absent

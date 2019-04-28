@@ -9,9 +9,9 @@ function SYS_OS() {
 function INSTALL_ANSIBLE() {
   #statements
   if [[ ${SYSTEM_OS} == "Centos" ]];then
-    yum install -y ansible && pip install boto
+    yum install -y ansible && pip install boto boto3
   elif [[ ${SYSTEM_OS} == "Ubuntu" ]]; then
-    apt install -y ansible && pip install boto
+    apt install -y ansible && pip install boto boto3
   fi
 }
 
@@ -20,6 +20,11 @@ function GET_AWS_SECRET() {
   #statements
   read -p "Enter your AWS_ACCESS_KEY_ID:" AWS_ACCESS_KEY_ID
   read -p "Enter your AWS_SECRET_ACCESS_KEY:" AWS_SECRET_ACCESS_KEY
+  echo >> ~/.boto <<EOF
+[Credentials]
+aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+EOF
 }
 
 function CREATE_EC2_INSTANCE(parameter) {

@@ -1,0 +1,87 @@
+---
+  - name: Provision an EC2 Instance
+    hosts: localhost
+    connection: local
+    gather_facts: False
+    tags: provisioning
+
+    vars:
+      instance_type: t2.micro
+      security_group: webservers
+      image: ami-02bcbb802e03574ba
+      region: us-east-2
+      keypair: test
+      count: 1
+    tasks:
+
+      - name: Create New security group with below given name
+        local_action:
+          module: ec2_group
+          name: "{{ security_group }}"
+          description: Security Group for Newly Created EC2 Instance
+          region: "{{ region }}"
+          rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+          rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+
+
+      - name: Launch the new t2 micro EC2 Instance
+        local_action: ec2
+                      group={{ security_group }}
+                      instance_type={{ instance_type}}
+                      image={{ image }}
+                      wait=true
+                      region={{ region }}
+                      keypair={{ keypair }}
+                      count={{count}}
+        register: ec2
+
+      - name: Wait for EC2 Instance to Spin-up and ready for SSH access
+        local_action: wait_for
+                      host={{ item.public_ip }}
+                      port=22
+                      state=started
+        with_items: "{{ ec2.instances }}"
+
+      - name: Adding Tags to Identify
+        local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+        with_items: "{{ ec2.instances }}"
+        args:
+          tags:
+            Name: Docker Server
+            PurPose: Testing EC2 Instance From Ansible
+      - name: Add the newly host 
+        add_host:
+          name: "{{ item.public_ip  }}"
+          groups: test
+        with_items: "{{ ec2.instances }}"
+
+
+  - name: devops CI
+    hosts: test
+    remote_user: ec2-user
+    become: yes
+    become_method: sudo
+    gather_facts: no
+    tasks:
+      - name: install softwares
+        yum:
+          name: "{{ item }}"
+          state: present
+        with_items:
+          - docker
+          - maven
+          - java-1.8.0-openjdk
+      - name: copy code to server
+        copy: src=../code dest=/app
+      - name: maven package and build image
+        shell: cd /app/code/ && mvn clean package  

@@ -1,3 +1,4 @@
+<del>
 ###DEV
 ---  
 为了方便使用hub.docker.com来存放Artifacts. 实际生产中可以使用docker registry或者harbor来管理Artifacts。
@@ -5,7 +6,7 @@
 
 STEPS：  
 1.  在代码根目录运行```/bin/bash start.sh```  
-
+</del>
 
 ###CICD  
 ---
@@ -19,3 +20,7 @@ STEPS：
 |github:|https://github.com/iexamcert/springboot-hello.git |||    
 |Dockerhub:|iexamcert/ springboot-hello | | |  
  </del>
+
+#DEV  
+---
+
