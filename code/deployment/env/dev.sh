@@ -2,8 +2,9 @@
 set -ex
 
 CODE_PATH=""
-DOCKER_USER="iexamcert"
-DOCKER_PASS="Kingwang01!"
+#please change user and pass 
+DOCKER_USER="user"
+DOCKER_PASS="pass"
 POM_FILE="pom.xml"
 IMAGE_VERSION="V1"
 DOCKER_PORT=""
