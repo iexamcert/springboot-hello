@@ -94,5 +94,5 @@
           state: present
         with_items:
           - docker
-#      - name: maven package and build image
-#        shell: cd /app/code/ && mvn clean package  
+      - name: excute shell
+        shell: cd /app/code/ && /bin/bash dev.sh
