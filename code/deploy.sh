@@ -27,10 +27,32 @@ aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
 EOF
 }
 
-function CREATE_EC2_INSTANCE(parameter) {
-  #statements
+function CREATE_KEY() {
+	ansible-playbook ../../Auto-Deploy/createnewkeypair.yml
 }
 
-function INIT_EC2(parameter) {
-  #statements
+function CREATE_EC2_INSTANCE(parameter) {
+  ansible-playbook ../../Auto-Deploy/create_ec2.yml --private-key=/tmp/aws-private.pem
+
 }
+function MV_DEPLOY_SHELL() {
+	mv `pwd`/deployment/env/${1}.sh .
+}
+
+function NOTE() {
+	echo "请访问 `cat /tmp/ec2_iup`:8080 服务"
+        echo "测试完请清除key和ec2实例，运行："
+        echo "ansible-playbook ../../Auto-Deploy/removekey.yml"
+        echo "ansible-playbook ../../Auto-Deploy/terminate_ec2.yml"
+}
+
+SYS_OS
+INSTALL_ANSIBLE
+GET_AWS_SECRET
+CREATE_KEY
+MV_DEPLOY_SHELL
+CREATE_EC2_INSTANCE
+NOTE
+
+
+

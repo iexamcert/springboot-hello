@@ -7,10 +7,10 @@
   tasks:
     - name: Remove Key Pair
       ec2_key:
-        name: sshkeypair
+        name: test
         state: absent
         region: "{{ region  }}"
     - name: delete private key
       file:
-        path: ./aws-private.pem
+        path: /tmp/aws-private.pem
         state: absent

@@ -6,9 +6,12 @@
   vars:
     region: 'us-east-2'
   tasks:
+    - name: Get the ec2 id
+      command: cat /tmp/ec2_id
+      register: ec2_id
     - name: Terminate Existing instances using Instance ID's
       ec2:
         region: "{{ region }}"
         wait: true
-        instance_ids: [ 'i-0114714b64fb02efb' ]
+        instance_ids: "{{ ec2_id.stdout }}"
         state: 'absent'
