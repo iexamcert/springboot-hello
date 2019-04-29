@@ -1,4 +1,15 @@
-###DEV
+###DEV  
+---  
+思路： 开发人员完成代码开发之后，执行脚本。ansible在ec2上申请私钥和机器，将代码上传，在ec2中完成编译，打包，docker镜像构建，并推送至hub.docker.com或其他私有仓库。最后在ec2中运行镜像。开发人员确认改动之后，拆除机器，删除key。执行脚本时会根据传递的参数选择相应的构建脚本。  
+
+####NOTE：  
+执行时会要求输入aws_access_id和 aws_secret_key.    
+请修改code/deployment/env/dev.sh中DOCKER_USER和DOCKER_PASS用于登录hub.docker.com。  
+
+在代码根目录：
+```bash
+cd code && /bin/bash deploy.sh dev
+```
 
 <del>
 ###DEV
@@ -22,5 +33,4 @@ STEPS：
 |github:|https://github.com/iexamcert/springboot-hello.git |||    
 |Dockerhub:|iexamcert/ springboot-hello | | |  
  </del>
-
 

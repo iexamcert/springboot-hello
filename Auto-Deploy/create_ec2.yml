@@ -94,5 +94,9 @@
           state: present
         with_items:
           - docker
+      - name: service docker start
+        service: 
+          name: docker
+          state: started
       - name: excute shell
         shell: cd /app/code/ && /bin/bash dev.sh
