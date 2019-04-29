@@ -45,7 +45,7 @@ function docker_push() {
 ###docker run
 function docker_run() {
 	echo "-------------docker run -----------------"
-	docker run -d --name myproject ${JAR_BASE_NAME}:${IMAGE_VERSION}
+	docker run -d --name  -p8080:8080 myproject ${DOCKER_USER}/${JAR_BASE_NAME}:${IMAGE_VERSION}
 }
 
 ###docker log and clean

@@ -43,10 +43,10 @@ function MV_DEPLOY_SHELL() {
 }
 
 function NOTE() {
-	echo "请访问 `cat /tmp/ec2_ip`:8080 服务"
+	echo "请访问 `cat /tmp/ec2_ip`:8080/hello 服务"
         echo "测试完请清除key和ec2实例，运行："
-        echo "ansible-playbook ../Auto-Deploy/removekey.yml"
-        echo "ansible-playbook ../Auto-Deploy/terminate_ec2.yml"
+        echo "删除ec2: ansible-playbook ../Auto-Deploy/removekey.yml"
+        echo "删除ec2私钥: ansible-playbook ../Auto-Deploy/terminate_ec2.yml"
 }
 
 SYS_OS
